@@ -66,10 +66,9 @@ body {
 .grid-header,
 .grid-row {
   display: grid;
-  grid-template-columns: minmax(220px, 2fr) minmax(160px, 1.1fr) minmax(
-      200px,
-      1.5fr
-    ) minmax(200px, 1.5fr) 44px;
+  grid-template-columns:
+    minmax(220px, 2fr) minmax(160px, 1.1fr) minmax(200px, 1.5fr)
+    minmax(200px, 1.5fr) 44px;
   gap: 12px;
   align-items: start;
 }
@@ -91,6 +90,10 @@ body {
 
 .cell {
   min-width: 0;
+}
+
+.cell-login-span {
+  grid-column: 3 / 5;
 }
 
 .cell-actions {

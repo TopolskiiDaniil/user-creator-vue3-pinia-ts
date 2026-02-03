@@ -167,29 +167,26 @@ function onTypeChange(d: Draft) {
             </el-form-item>
           </div>
 
-          <div class="cell">
+          <div class="cell" :class="{ 'cell-login-span': d.type === 'ldap' }">
             <el-form-item :error="d.errors.login" :show-message="true">
               <el-input
                 v-model="d.login"
-                placeholder="Логин"
+                placeholder="Значение"
                 @blur="commitDraft(d)"
                 clearable
               />
             </el-form-item>
           </div>
 
-          <div class="cell">
-            <template v-if="d.type === 'local'">
-              <el-form-item :error="d.errors.password" :show-message="true">
-                <el-input
-                  v-model="d.passwordInput"
-                  placeholder="Пароль"
-                  show-password
-                  @blur="commitDraft(d)"
-                />
-              </el-form-item>
-            </template>
-            <div v-else class="password-placeholder" />
+          <div v-if="d.type === 'local'" class="cell">
+            <el-form-item :error="d.errors.password" :show-message="true">
+              <el-input
+                v-model="d.passwordInput"
+                placeholder="Значение"
+                show-password
+                @blur="commitDraft(d)"
+              />
+            </el-form-item>
           </div>
 
           <div class="cell-actions">

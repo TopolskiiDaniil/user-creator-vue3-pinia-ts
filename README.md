@@ -1,5 +1,59 @@
-# Vue 3 + TypeScript + Vite
+## UserCreator
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Фронтенд-приложение на **Vue 3 + TypeScript + Pinia + Element Plus** для управления списком учетных записей.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+### Стек
+
+- **Фреймворк**: Vue 3 (Composition API, Vite)
+- **Язык**: TypeScript
+- **Стейт-менеджер**: Pinia
+- **UI-библиотека**: Element Plus
+
+### Возможности
+
+- **Список учетных записей** с полями:
+  - Метки (строка, разбиение по `;`, в сторе хранится как массив `{ text: string }`)
+  - Тип записи: `LDAP` или `Локальная`
+  - Логин
+  - Пароль (только для типа `Локальная`, для `LDAP` всегда `null`)
+- **Добавление / удаление** строк.
+- **Валидация**:
+  - Метки: не более 50 символов.
+  - Логин и пароль (для локального типа): обязательные поля, не более 100 символов.
+  - Ошибки подсвечиваются красной обводкой и текстом под полем ввода.
+- **Явное сохранение** строки:
+  - При первом или любом изменении полей появляется кнопка с галочкой.
+  - Сохранение происходит только по нажатию на галочку.
+  - При клике вне строки несохранённые изменения откатываются к последнему сохранённому состоянию (плохой пользовательский опыт).
+- **Тип записи**:
+  - При выборе `LDAP` поле пароля скрывается, логин растягивается на ширину двух колонок.
+  - При выборе `Локальная` поле пароля отображается и становится обязательным.
+- **Персистентность**:
+  - Все сохранённые записи хранятся в Pinia-сторе и синхронизируются с `localStorage`.
+  - После перезагрузки страницы сохранённые учетные записи восстанавливаются.
+
+### Структура основных файлов
+
+- `src/main.ts` — инициализация приложения, подключение Pinia и Element Plus, гидрация стора.
+- `src/stores/accounts.ts` — стор учетных записей, работа с `localStorage`.
+- `src/components/AccountsPage.vue` — страница со списком учетных записей и логикой драфтов.
+- `src/components/AccountRow.vue` — одна строка таблицы (поля, валидация, кнопки сохранить/удалить).
+- `src/types/accountDraft.ts` — типы драфта учетной записи.
+- `src/style.css` — базовый layout страницы и таблицы.
+
+### Локальный запуск
+
+```bash
+npm install
+npm run dev
+```
+
+Приложение будет доступно по адресу, который выведет Vite (обычно `http://localhost:5173`) или по ссылке в репозитории на деплой Vercel (https://user-creator-vue3-pinia-ts.vercel.app/).
+
+### Сборка
+
+```bash
+npm run build
+```
+
+Собранные файлы попадут в директорию `dist/`.

@@ -35,6 +35,13 @@ const drafts = reactive<Draft[]>(
     login: a.login,
     passwordInput: a.password ?? "",
     errors: {},
+    isSaved: true,
+    lastSaved: {
+      metaInput: metaToInput(a.meta),
+      type: a.type,
+      login: a.login,
+      passwordInput: a.password ?? "",
+    },
   })),
 );
 
@@ -48,6 +55,13 @@ function addDraft() {
     login: "",
     passwordInput: "",
     errors: {},
+    isSaved: false,
+    lastSaved: {
+      metaInput: "",
+      type: "local",
+      login: "",
+      passwordInput: "",
+    },
   });
 }
 
@@ -87,11 +101,30 @@ function commitDraft(d: Draft) {
   };
 
   accountsStore.upsertAccount(account);
+  d.isSaved = true;
+  d.lastSaved = {
+    metaInput: d.metaInput,
+    type: d.type,
+    login: d.login,
+    passwordInput: d.passwordInput,
+  };
 }
 
-function onTypeChange(d: Draft) {
-  if (d.type === "ldap") d.passwordInput = "";
-  commitDraft(d);
+function markDirty(id: string) {
+  const draft = drafts.find((x) => x.id === id);
+  if (!draft) return;
+  draft.isSaved = false;
+}
+
+function resetDraft(id: string) {
+  const draft = drafts.find((x) => x.id === id);
+  if (!draft) return;
+  draft.metaInput = draft.lastSaved.metaInput;
+  draft.type = draft.lastSaved.type;
+  draft.login = draft.lastSaved.login;
+  draft.passwordInput = draft.lastSaved.passwordInput;
+  draft.errors = {};
+  draft.isSaved = true;
 }
 </script>
 
@@ -131,7 +164,8 @@ function onTypeChange(d: Draft) {
           :key="d.id"
           :draft="d"
           @commit="commitDraft"
-          @type-change="onTypeChange"
+          @mark-dirty="markDirty"
+          @reset="resetDraft"
           @remove="removeDraft"
         />
       </div>

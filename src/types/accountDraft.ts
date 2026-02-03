@@ -11,4 +11,5 @@ export type Draft = {
   login: string;
   passwordInput: string;
   errors: DraftErrors;
+  isSaved: boolean;
 };

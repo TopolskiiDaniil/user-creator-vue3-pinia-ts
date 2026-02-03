@@ -68,8 +68,8 @@ body {
   display: grid;
   grid-template-columns:
     minmax(220px, 2fr) minmax(160px, 1.1fr) minmax(200px, 1.5fr)
-    minmax(200px, 1.5fr) 44px;
-  gap: 12px;
+    minmax(200px, 1.5fr) 72px;
+  gap: 5px;
   align-items: start;
 }
 
@@ -99,7 +99,14 @@ body {
 .cell-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 4px;
   padding-top: 2px;
+  margin-left: 5px;
+}
+
+.cell-actions .el-button {
+  margin: 0;
 }
 
 .password-placeholder {

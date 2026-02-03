@@ -12,4 +12,10 @@ export type Draft = {
   passwordInput: string;
   errors: DraftErrors;
   isSaved: boolean;
+  lastSaved: {
+    metaInput: string;
+    type: AccountType;
+    login: string;
+    passwordInput: string;
+  };
 };
